@@ -1,5 +1,7 @@
+// trigger vercel redeploy
+
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://kalyanashobha-project-n8jb.vercel.app/register",
+  baseURL: import.meta.env.VITE_API_URL,
 });
