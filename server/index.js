@@ -9,33 +9,33 @@ const profileRoutes = require("./routes/profile");
 
 const app = express();
 
-// ✅ CORS (ALLOW ALL FOR TESTING)
+/* ===== CORS (SAFE FOR TESTING) ===== */
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: true, // allow all origins dynamically
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ Handle preflight
-app.options("*", cors());
-
 app.use(express.json());
 
+/* ===== ROUTES ===== */
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/profile", profileRoutes);
 
+/* ===== HEALTH CHECK ===== */
 app.get("/", (req, res) => {
   res.send("KalyanaShobha API is running");
 });
 
+/* ===== DB + SERVER ===== */
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("MongoDB connected successfully");
-    app.listen(process.env.PORT || 5000, () => {
+    app.listen(process.env.PORT || 10000, () => {
       console.log("Server running");
     });
   })
