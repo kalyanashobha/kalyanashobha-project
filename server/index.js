@@ -9,8 +9,7 @@ const profileRoutes = require("./routes/profile");
 
 const app = express();
 
-const cors = require("cors");
-
+// ✅ CORS (ALLOW ALL FOR TESTING)
 app.use(
   cors({
     origin: "*",
@@ -19,10 +18,8 @@ app.use(
   })
 );
 
-// IMPORTANT: handle preflight
+// ✅ Handle preflight
 app.options("*", cors());
-
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
@@ -39,7 +36,7 @@ mongoose
   .then(() => {
     console.log("MongoDB connected successfully");
     app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server running`);
+      console.log("Server running");
     });
   })
   .catch((err) => {
