@@ -9,17 +9,19 @@ const profileRoutes = require("./routes/profile");
 
 const app = express();
 
-const corsOptions = {
-  origin: [
-    "https://kalyanashobha-project-n8jb-je73nr059.vercel.app",
-    "https://kalyanashobha-project-n8jb.vercel.app",
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: false,
-};
+const cors = require("cors");
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// IMPORTANT: handle preflight
+app.options("*", cors());
+
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
